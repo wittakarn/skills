@@ -11,7 +11,7 @@ It only extracts. It records what the feature does today, including odd or incon
 ## Install
 
 ```
-/plugin marketplace add /Users/wittakarnkeeratichayakorn/Projects/skills
+/plugin marketplace add wittakarn/skills
 /plugin install extract-business-rules@wittakarn-skills
 ```
 

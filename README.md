@@ -13,13 +13,13 @@ Claude Code plugins by Wittakarn Keeratichayakorn, published as a plugin marketp
 In Claude Code, add this repo as a marketplace, then install a plugin from it:
 
 ```
-/plugin marketplace add /Users/wittakarnkeeratichayakorn/Projects/skills
+/plugin marketplace add wittakarn/skills
 /plugin install extract-business-rules@wittakarn-skills
 ```
 
-Once the repo is on GitHub, others can add it with `/plugin marketplace add <owner>/<repo>`.
+To get new versions, run `/plugin marketplace update wittakarn-skills`.
 
-After pulling changes, run `/plugin marketplace update wittakarn-skills` to pick them up.
+When you change a plugin, bump `version` in its `plugin.json` so installed copies pick up the change.
 
 ## Layout
 
