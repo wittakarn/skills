@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "wittakarn-skills",
+  "description": "Claude Code skills by Wittakarn Keeratichayakorn.",
+  "owner": {
+    "name": "Wittakarn Keeratichayakorn"
+  },
+  "plugins": [
+    {
+      "name": "extract-business-rules",
+      "description": "Extract a feature's business rules from code, confirm them with a human one rule at a time, and record them as numbered guardrails for refactors and migrations.",
+      "source": "./plugins/extract-business-rules",
+      "category": "development"
+    }
+  ]
+}

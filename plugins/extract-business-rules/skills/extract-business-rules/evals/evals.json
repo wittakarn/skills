@@ -1,0 +1,29 @@
+{
+  "skill_name": "extract-business-rules",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Extract the business rules of the create customer feature from /Users/wittakarnkeeratichayakorn/Sites/SEQUOT/pages/customer.php",
+      "expected_output": "A draft business-rules/create-customer.md (all rules draft, stable IDs, source @ commit, Not-rules section, scoped to create only) plus a first interview message showing one rule with absolute file:line refs, verbatim code, plain words, a check question, and the reply line.",
+      "files": [],
+      "assertions": [
+        "Draft feature file exists under business-rules/ and records source commit 063592c",
+        "business-rules/README.md index exists with the feature row",
+        "Every rule has a stable ID of form BR-<FEATURE>-NNN",
+        "Every rule is status draft (nothing marked confirmed/test-ready without a human)",
+        "Captures VAT rule: grades a/b/c/d (NV-*) are non-VAT (include_vat N / SAP ARNO), all others VAT (Y / AR07)",
+        "Captures: credit limit (financial_amount) is stored only when payment term > 0, otherwise empty",
+        "Captures: credit limit field editable only for roles A/C, and notes the server does not check the role",
+        "Captures: customer is created in SAP for each company code (SELT,SRCE,TNPE) and any SAP failure rolls back the whole create",
+        "Captures SAP card code format C + customer id zero-padded to 8 digits",
+        "Has a 'Not rules' section listing implementation details",
+        "Stays in scope: no rules drafted from update, delete, or customer search (customer-q) flows",
+        "Extract-only: no improvement suggestions, no 'bug' labels, no 'should this change' questions",
+        "first_message states the total rule count and labels the question 'Rule 1 of N'",
+        "first_message asks about exactly one rule",
+        "first_message shows absolute /path/file.php:line refs, a verbatim code block, plain-words explanation, and a check question",
+        "first_message ends with the reply line: confirm · wrong · not a rule · skip"
+      ]
+    }
+  ]
+}
