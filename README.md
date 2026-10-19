@@ -4,26 +4,36 @@ Claude Code plugins by Wittakarn Keeratichayakorn, published as a plugin marketp
 
 ## Plugins
 
-| Plugin | What it does |
-|---|---|
-| [extract-business-rules](plugins/extract-business-rules/) | Extract a feature's business rules from code, confirm them with a human one rule at a time, and record them as numbered guardrails for refactors and migrations. |
-| [guard-business-rules](plugins/guard-business-rules/) | Install a PreToolUse hook that asks a human before Claude changes, deletes or moves a test or source line that protects an active business rule. |
+| Plugin | Skills | What it does |
+|---|---|---|
+| [business-rules](plugins/business-rules/) | `extract-business-rules`, `guard-business-rules` | Extract a feature's business rules from code and confirm them with a human as numbered guardrails, then install a PreToolUse hook that asks a human before Claude changes, deletes or moves a test or source line that protects an active rule. |
 
 ## Install
 
-In Claude Code, add this repo as a marketplace, then install the plugins you want from it. `/plugin install` takes one plugin at a time, so run it once per plugin:
+From a terminal:
+
+```
+claude plugin marketplace add wittakarn/skills
+claude plugin install business-rules@wittakarn-skills --scope user
+```
+
+Or inside Claude Code:
 
 ```
 /plugin marketplace add wittakarn/skills
-/plugin install extract-business-rules@wittakarn-skills
-/plugin install guard-business-rules@wittakarn-skills
+/plugin install business-rules@wittakarn-skills
 ```
 
-The two work together: `extract-business-rules` records the rules as `BR-<FEATURE>-<NNN>` IDs, and `guard-business-rules` protects the tests and code that carry those IDs. Install only the one you need, or both.
+`--scope user` installs for you in every project. Use `--scope project` to share the plugin with everyone on a repo through its `.claude/settings.json`.
 
-To get new versions, run `/plugin marketplace update wittakarn-skills`.
+To get new versions, run `claude plugin marketplace update wittakarn-skills`.
 
-When you change a plugin, bump `version` in its `plugin.json` so installed copies pick up the change.
+If you installed the older `extract-business-rules` or `guard-business-rules` plugins, uninstall them after installing `business-rules`, so each skill is loaded only once:
+
+```
+claude plugin uninstall extract-business-rules@wittakarn-skills
+claude plugin uninstall guard-business-rules@wittakarn-skills
+```
 
 ## Layout
 
@@ -37,4 +47,6 @@ plugins/<plugin>/
   skills/<skill>/evals/             # optional eval cases and fixtures
 ```
 
-To add a skill, create a new folder under `plugins/` with the same layout and add an entry to `marketplace.json`.
+To add a skill to an existing plugin, add a folder under its `skills/`. To add a new plugin, create a folder under `plugins/` with the same layout and add an entry to `marketplace.json`.
+
+When you change a plugin, bump `version` in its `plugin.json` so installed copies pick up the change.

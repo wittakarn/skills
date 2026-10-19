@@ -1,9 +1,0 @@
-{
-  "name": "extract-business-rules",
-  "version": "1.0.0",
-  "description": "Extract a feature's business rules from code, confirm them with a human one rule at a time, and record them as numbered guardrails for refactors and migrations.",
-  "author": {
-    "name": "Wittakarn Keeratichayakorn"
-  },
-  "keywords": ["business-rules", "migration", "refactoring", "legacy-code", "spec"]
-}
