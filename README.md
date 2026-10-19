@@ -19,6 +19,16 @@ In Claude Code, add this repo as a marketplace, then install the plugins you wan
 /plugin install guard-business-rules@wittakarn-skills
 ```
 
+Or from a terminal, without opening Claude Code:
+
+```
+claude plugin marketplace add wittakarn/skills
+claude plugin install extract-business-rules@wittakarn-skills --scope user
+claude plugin install guard-business-rules@wittakarn-skills --scope user
+```
+
+`--scope user` installs for you in every project. Use `--scope project` to share a plugin with everyone on a repo through its `.claude/settings.json`.
+
 The two work together: `extract-business-rules` records the rules as `BR-<FEATURE>-<NNN>` IDs, and `guard-business-rules` protects the tests and code that carry those IDs. Install only the one you need, or both.
 
 To get new versions, run `/plugin marketplace update wittakarn-skills`.
