@@ -1,0 +1,69 @@
+{
+  "skill_name": "guard-business-rules",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We extracted our order pricing business rules last week and tagged the xUnit tests with the BR IDs. I'm worried Claude will 'fix' a failing test by changing the assertion. Set up a pretooluse hook in this repo so any change to those business rule tests needs my approval.",
+      "expected_output": "br-guard.cjs + config installed under .claude/hooks, settings.json hook with onFailure block, CLAUDE.md note; scan shows BR-ORD-001/002/003 and unknown BR-ORD-009 protected, BR-ORD-004 (draft) and BR-ORD-006 (deprecated) unprotected; selftest all PASS.",
+      "files": [
+        "evals/files/csharp-orders"
+      ],
+      "assertions": [
+        "A PreToolUse hook is registered in the repo's committed .claude/settings.json",
+        "Editing the BR-ORD-001 (tested) test asks for approval",
+        "Editing the comment-tagged BR-ORD-002 (test-ready) theory data asks",
+        "Editing the method-name-tagged BR_ORD_003 test asks",
+        "Editing a test tagged with unknown ID BR-ORD-009 asks",
+        "Editing the draft BR-ORD-004 test does not prompt",
+        "Editing the deprecated BR-ORD-006 test does not prompt",
+        "Editing an untagged test in the same file does not prompt",
+        "Adding a new test after a protected one does not prompt",
+        "Bash rm of the BR test file asks",
+        "Read-only Bash (dotnet test) does not prompt",
+        "Editing source cited by active BR-ORD-001 (Pricing.cs:9-13) asks",
+        "Did not modify tests, source or business-rules (only .claude/ and CLAUDE.md)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "lock down the BR tests in this vitest project pls \u2014 if claude wants to touch a test that has a BR-BKG id (or the code lines the rules point at) it should ask me first. our package.json is type module btw",
+      "expected_output": "Hook installed as .cjs (works with type: module), typescript config covering __tests__ and *.test.ts, scan shows describe/it.each/comment-tagged tests protected and BR-BKG-004 (draft) not, selftest PASS.",
+      "files": [
+        "evals/files/ts-booking"
+      ],
+      "assertions": [
+        "A PreToolUse hook is registered in the repo's committed .claude/settings.json",
+        "Hook runs in an ESM (\"type\": \"module\") repo and asks on the BR-BKG-001 nested it",
+        "Editing it.each data of BR-BKG-002 asks",
+        "Editing comment-tagged BR-BKG-003 (confirmed) test asks",
+        "Editing draft BR-BKG-004 test does not prompt",
+        "Editing untagged test (with options object) does not prompt",
+        "Editing cited source line (refundFor, cancel.ts:14-17) asks",
+        "Editing uncited source line (formatRefund) does not prompt",
+        "Bash rm of the BR test file asks",
+        "Read-only Bash (npx vitest run) does not prompt",
+        "Did not modify tests, source or business-rules (only .claude/ and CLAUDE.md)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Can you add guardrails to this python repo so that Claude Code has to get a human OK before editing or deleting any pytest test linked to an active business rule in business-rules/? Deprecated rules don't need protecting.",
+      "expected_output": "Hook installed with python config, decorator- and docstring-tagged tests protected, deprecated BR-LOY-003 test not protected, cited source loyalty/points.py:4-6 protected, selftest PASS.",
+      "files": [
+        "evals/files/python-loyalty"
+      ],
+      "assertions": [
+        "A PreToolUse hook is registered in the repo's committed .claude/settings.json",
+        "Editing multi-line parametrize data of BR-LOY-001 asks",
+        "Editing docstring-tagged BR-LOY-002 test asks",
+        "Editing deprecated BR-LOY-003 test does not prompt",
+        "Editing untagged test_label does not prompt",
+        "Adding a new test does not prompt",
+        "Bash rm of the BR test file asks",
+        "Read-only Bash (pytest -q) does not prompt",
+        "Write that deletes the BR-LOY-001 test asks",
+        "Did not modify tests, source or business-rules (only .claude/ and CLAUDE.md)"
+      ]
+    }
+  ]
+}
