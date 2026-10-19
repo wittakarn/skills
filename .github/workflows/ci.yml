@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Parse every JSON manifest and eval file
+        run: |
+          git ls-files '*.json' | while read -r f; do
+            node -e 'JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"))' "$f" \
+              || { echo "::error file=$f::invalid JSON"; exit 1; }
+          done
+
+  guard-selftest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # br-guard.cjs promises Node 16+, so test the oldest and the current LTS.
+        node: [16, 22]
+    env:
+      SKILL: plugins/business-rules/skills/guard-business-rules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Self-test the hook against each fixture repo
+        run: |
+          status=0
+          for dir in "$SKILL"/evals/files/*/; do
+            name=$(basename "$dir")
+            cfg="$RUNNER_TEMP/$name.config.json"
+            # Use the config detect.cjs suggests, as the skill does on install.
+            node "$SKILL/scripts/detect.cjs" "$dir" \
+              | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);console.log(JSON.stringify({root:j.root,...j.suggestedConfig}))})' \
+              > "$cfg"
+            echo "::group::$name"
+            out=$(BR_GUARD_CONFIG="$cfg" node "$SKILL/scripts/br-guard.cjs" --selftest)
+            echo "$out"
+            echo "::endgroup::"
+            # --selftest always exits 0, so read its summary line.
+            if echo "$out" | grep -q '^FAIL' || ! echo "$out" | grep -q ' 0 failed\.$'; then
+              echo "::error::selftest failed for $name"
+              status=1
+            fi
+          done
+          exit $status
+      - name: Hook fails safe on bad input
+        run: |
+          out=$(echo 'not json' | node "$SKILL/scripts/br-guard.cjs")
+          echo "$out"
+          echo "$out" | grep -q '"permissionDecision":"ask"'

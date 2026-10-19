@@ -50,3 +50,7 @@ plugins/<plugin>/
 To add a skill to an existing plugin, add a folder under its `skills/`. To add a new plugin, create a folder under `plugins/` with the same layout and add an entry to `marketplace.json`.
 
 When you change a plugin, bump `version` in its `plugin.json` so installed copies pick up the change.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
