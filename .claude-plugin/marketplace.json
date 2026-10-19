@@ -7,15 +7,9 @@
   },
   "plugins": [
     {
-      "name": "extract-business-rules",
-      "description": "Extract a feature's business rules from code, confirm them with a human one rule at a time, and record them as numbered guardrails for refactors and migrations.",
-      "source": "./plugins/extract-business-rules",
-      "category": "development"
-    },
-    {
-      "name": "guard-business-rules",
-      "description": "Install a PreToolUse hook that asks a human before Claude changes, deletes or moves a unit test or source line that protects an active BR-<FEATURE>-<NNN> business rule.",
-      "source": "./plugins/guard-business-rules",
+      "name": "business-rules",
+      "description": "Extract a feature's business rules from code, confirm them with a human as numbered BR-<FEATURE>-<NNN> guardrails, then install a PreToolUse hook that asks a human before Claude changes, deletes or moves a test or source line that protects an active rule.",
+      "source": "./plugins/business-rules",
       "category": "development"
     }
   ]

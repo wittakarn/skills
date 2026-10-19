@@ -1,9 +1,0 @@
-{
-  "name": "guard-business-rules",
-  "version": "1.0.0",
-  "description": "Install a PreToolUse hook that asks a human before Claude changes, deletes or moves a unit test or source line that protects an active BR-<FEATURE>-<NNN> business rule.",
-  "author": {
-    "name": "Wittakarn Keeratichayakorn"
-  },
-  "keywords": ["business-rules", "hooks", "pretooluse", "guardrails", "unit-tests", "migration"]
-}
