@@ -1,0 +1,5 @@
+[project]
+name = "loyalty"
+version = "0.1.0"
+[tool.pytest.ini_options]
+markers = ["br(id): business rule covered by this test"]

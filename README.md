@@ -7,6 +7,7 @@ Claude Code plugins by Wittakarn Keeratichayakorn, published as a plugin marketp
 | Plugin | What it does |
 |---|---|
 | [extract-business-rules](plugins/extract-business-rules/) | Extract a feature's business rules from code, confirm them with a human one rule at a time, and record them as numbered guardrails for refactors and migrations. |
+| [guard-business-rules](plugins/guard-business-rules/) | Install a PreToolUse hook that asks a human before Claude changes, deletes or moves a test or source line that protects an active business rule. |
 
 ## Install
 
